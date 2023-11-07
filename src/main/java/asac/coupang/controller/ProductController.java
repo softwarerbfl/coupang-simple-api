@@ -2,10 +2,12 @@ package asac.coupang.controller;
 
 import asac.coupang.dto.ProductDetailDto;
 import asac.coupang.dto.ProductDto;
+import asac.coupang.dto.ProductUpdateDto;
 import asac.coupang.entity.Product;
 import asac.coupang.repository.ProductRepository;
 import asac.coupang.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,17 @@ public class ProductController {
         return productService.addProduct(sellerId, dto);
     }
 
+    //상품 삭제
     @DeleteMapping("/product/{id}/delete")
     public ResponseEntity<String> deleteProduct(@PathVariable String id) {
         return productService.deleteProduct(id);
+    }
+
+    //상품 수정
+    @PutMapping("/product/{id}/update")
+    public ResponseEntity<Product> updateProduct(@PathVariable String id,
+                                                 @RequestBody ProductUpdateDto dto){
+        Product updateProduct = productService.updateProduct(id, dto);
+        return ResponseEntity.ok(updateProduct);
     }
 }

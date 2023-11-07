@@ -2,13 +2,16 @@ package asac.coupang.service;
 
 import asac.coupang.dto.ProductDetailDto;
 import asac.coupang.dto.ProductDto;
+import asac.coupang.dto.ProductUpdateDto;
 import asac.coupang.entity.Category;
 import asac.coupang.entity.Product;
 import asac.coupang.entity.Seller;
 import asac.coupang.repository.ProductRepository;
 import asac.coupang.repository.SellerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +64,28 @@ public class ProductService {
     public ResponseEntity<String> deleteProduct(String id){
         productrepository.deleteById(Long.valueOf(id));
         return ResponseEntity.ok("Success Delete Product!");
+    }
+
+    // 상품 ID에 해당하는 상품 수정
+    public Product updateProduct(String id, ProductUpdateDto dto) {
+        Product product = productrepository.findById(Long.valueOf(id))
+                .orElseThrow(() -> new EntityNotFoundException("Product Not Found"));
+        if (dto.getProductName()!=null){
+            product.setProductName(dto.getProductName());
+        }
+        if(dto.getProductDetail()!=null){
+            product.setProductDetail(dto.getProductDetail());
+        }
+        if(dto.getProductPrice()!=null){
+            product.setProductPrice(dto.getProductPrice());
+        }
+        if(dto.getCategory()!=null){
+            product.setCategory(Category.valueOf(dto.getCategory()));
+        }
+        if(dto.getAmount()!=null){
+            product.setAmount(dto.getAmount());
+        }
+        return productrepository.save(product);
     }
 
 }
