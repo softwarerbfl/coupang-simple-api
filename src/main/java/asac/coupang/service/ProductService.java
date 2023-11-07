@@ -57,4 +57,10 @@ public class ProductService {
     }
 
 
+    // 상품 ID에 해당하는 상품 삭제
+    public ResponseEntity<String> deleteProduct(String id){
+        productrepository.deleteById(Long.valueOf(id));
+        return ResponseEntity.ok("Success Delete Product!");
+    }
+
 }

@@ -24,7 +24,12 @@ public class ProductController {
     // 상품 등록
     @PostMapping("/product/add/{sellerId}")
     public ResponseEntity<String> addProduct(@PathVariable String sellerId,
-                                              @RequestBody ProductDto dto){
+                                             @RequestBody ProductDto dto) {
         return productService.addProduct(sellerId, dto);
+    }
+
+    @DeleteMapping("/product/{id}/delete")
+    public ResponseEntity<String> deleteProduct(@PathVariable String id) {
+        return productService.deleteProduct(id);
     }
 }
