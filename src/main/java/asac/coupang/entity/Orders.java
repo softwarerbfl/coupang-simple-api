@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,14 +14,15 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+@Table(name = "orders")
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
+    private Long ordersId;
 
-    private LocalDateTime orderDate;
-    private Long orderPrice;
-    private Long orderCount;
+    private LocalDateTime ordersDate;
+    private Long ordersPrice;
+    private Long ordersCount;
 
     @ManyToOne
     @JsonIgnore
@@ -31,10 +30,10 @@ public class Order {
     private Customer customer;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL)
     private Pay pay;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "orders")
     private List<ProductOrder> productOrders;
 }

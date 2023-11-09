@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="delivery")
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,6 @@ public class Delivery {
     private Long status; //  배송 완료 여부
 
     @OneToOne
-    @JoinColumn(name="productOrder_id")
+    @JoinColumn(name="product_order_id")
     private ProductOrder productOrder;
 }

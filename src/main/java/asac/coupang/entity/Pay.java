@@ -21,6 +21,6 @@ public class Pay {
     private Long cardNumber;
 
     @OneToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "orders_id")
+    private Orders orders;
 }
