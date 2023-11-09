@@ -16,4 +16,7 @@ public class ProductOrder {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @OneToOne(mappedBy = "productOrder", cascade = CascadeType.ALL)
+    private Delivery delivery;
 }
