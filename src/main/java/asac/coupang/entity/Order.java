@@ -1,5 +1,6 @@
 package asac.coupang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,12 +26,15 @@ public class Order {
     private Long orderCount;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Pay pay;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order")
     private List<ProductOrder> productOrders;
 }

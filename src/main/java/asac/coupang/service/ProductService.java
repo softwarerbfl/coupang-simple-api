@@ -7,6 +7,7 @@ import asac.coupang.entity.Category;
 import asac.coupang.entity.Product;
 import asac.coupang.entity.Seller;
 import asac.coupang.repository.ProductRepository;
+import asac.coupang.repository.ProductRepositoryImpl;
 import asac.coupang.repository.SellerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ import java.util.Optional;
 public class ProductService {
     private final SellerRepository sellerRepository;
     private final ProductRepository productrepository;
+    private final ProductRepositoryImpl productRepositoryImpl;
+
     // 상품 ID에 해당하는 상품의 디테일 정보 조회
     public ResponseEntity<ProductDetailDto> getProductDetail(String id){
         Optional<Product> product = productrepository.findById(Long.valueOf(id));
@@ -93,6 +96,23 @@ public class ProductService {
     public List<Product> findByCategory(String category){
         List<Product> products = productrepository.findByCategory(Category.valueOf(category));
         return products;
+    }
+
+    // 전체 상품 조회
+    public List<Product> findAll(){
+        List<Product> products = productRepositoryImpl.findAll();
+        return products;
+    }
+    // 원하는 Seller가 판매하는 상품들 불러오기
+    public List<Product> findBySeller(Long sellerId){
+        Optional<Seller> seller = sellerRepository.findById(sellerId);
+        if(seller.isPresent()){
+            List<Product> products = productRepositoryImpl.findBySeller(seller.get());
+            return products;
+        }
+        else{
+            return null;
+        }
     }
 
 }

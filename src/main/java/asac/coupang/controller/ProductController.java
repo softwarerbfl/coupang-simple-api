@@ -42,15 +42,29 @@ public class ProductController {
     //상품 수정
     @PutMapping("/product/{id}/update")
     public ResponseEntity<Product> updateProduct(@PathVariable String id,
-                                                 @RequestBody ProductUpdateDto dto){
+                                                 @RequestBody ProductUpdateDto dto) {
         Product updateProduct = productService.updateProduct(id, dto);
         return ResponseEntity.ok(updateProduct);
     }
 
     //원하는 카테고리에 해당하는 상품 조회
     @GetMapping("/product")
-    public ResponseEntity<List<Product>> findByCategory(@RequestParam String category){
+    public ResponseEntity<List<Product>> findByCategory(@RequestParam String category) {
         List<Product> products = productService.findByCategory(category);
+        return ResponseEntity.ok(products);
+    }
+
+    // 전체 Product 불러오기
+    @GetMapping("/product/all")
+    public ResponseEntity<List<Product>> findAll() {
+        List<Product> products = productService.findAll();
+        return ResponseEntity.ok(products);
+    }
+
+    // 원하는 Seller가 판매하는 상품들 불러오기
+    @GetMapping("/product/seller")
+    public ResponseEntity<List<Product>> findBySeller(@RequestParam Long sellerId){
+        List<Product> products = productService.findBySeller(sellerId);
         return ResponseEntity.ok(products);
     }
 }
