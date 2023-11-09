@@ -1,5 +1,6 @@
 package asac.coupang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,15 +24,19 @@ public class Product {
     private Long amount; // 상품 재고
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductOption> productOptions;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ProductOrder> productOrders;
 }

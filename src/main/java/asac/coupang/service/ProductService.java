@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -86,6 +87,12 @@ public class ProductService {
             product.setAmount(dto.getAmount());
         }
         return productrepository.save(product);
+    }
+
+    // 원하는 카테고리에 해당하는 상품 조회
+    public List<Product> findByCategory(String category){
+        List<Product> products = productrepository.findByCategory(Category.valueOf(category));
+        return products;
     }
 
 }

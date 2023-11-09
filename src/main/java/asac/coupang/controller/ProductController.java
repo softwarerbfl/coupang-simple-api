@@ -6,10 +6,13 @@ import asac.coupang.dto.ProductUpdateDto;
 import asac.coupang.entity.Product;
 import asac.coupang.repository.ProductRepository;
 import asac.coupang.service.ProductService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,5 +45,12 @@ public class ProductController {
                                                  @RequestBody ProductUpdateDto dto){
         Product updateProduct = productService.updateProduct(id, dto);
         return ResponseEntity.ok(updateProduct);
+    }
+
+    //원하는 카테고리에 해당하는 상품 조회
+    @GetMapping("/product")
+    public ResponseEntity<List<Product>> findByCategory(@RequestParam String category){
+        List<Product> products = productService.findByCategory(category);
+        return ResponseEntity.ok(products);
     }
 }
